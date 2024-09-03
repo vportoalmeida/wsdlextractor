@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extração de WSDL de RFC</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 800px; 
+        }
+
+        .form-container h1 {
+            margin-bottom: 30px;
+            font-size: 24px;
+            color: #333333;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555555;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #333333;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: #0066cc;
+            outline: none;
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #0066cc;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #ffffff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-button:hover {
+            background-color: #005bb5;
+        }
+        
+        .result-message, .file-path {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+            word-wrap: break-word;
+        }
+
+        .result-message.success, .file-path.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .result-message.error, .file-path.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <h1>Executar extração de WSDL de RFC</h1>
+        <form id="rfcForm">
+            <div class="form-group">
+                <label for="rfcName">Nome da RFC</label>
+                <input type="text" id="rfcName" name="rfcName" required placeholder="Insira o nome da RFC">
+            </div>
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" name="username" required placeholder="Insira seu usuário">
+            </div>
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" name="password" required placeholder="Insira sua senha">
+            </div>
+            <button type="submit" class="submit-button">Executar</button>
+            <div id="result" class="result-message" style="display: none;"></div>
+            <div id="filePath" class="file-path" style="display: none;"></div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('rfcForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const rfcName = document.getElementById('rfcName').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const resultDiv = document.getElementById('result');
+            const filePathDiv = document.getElementById('filePath');
+
+            try {
+                const response = await fetch('/execute-rfc', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ rfcName, username, password })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    resultDiv.style.display = 'block';
+                    resultDiv.className = 'result-message success';
+                    resultDiv.textContent = result.message;
+                    
+                    filePathDiv.style.display = 'block';
+                    filePathDiv.className = 'file-path success';
+                    filePathDiv.textContent = `Arquivos criados: ${result.filePath}`;
+                } else {
+                    resultDiv.style.display = 'block';
+                    resultDiv.className = 'result-message error';
+                    resultDiv.textContent = result.message || 'Ocorreu um erro ao executar a função.';
+                    filePathDiv.style.display = 'none';
+                }
+                
+                setTimeout(() => {
+                    resultDiv.style.display = 'none';
+                    filePathDiv.style.display = 'none';
+                }, 100000);
+
+            } catch (error) {
+                resultDiv.style.display = 'block';
+                resultDiv.className = 'result-message error';
+                resultDiv.textContent = 'Erro de conexão com o servidor.';
+                filePathDiv.style.display = 'none';
+                console.error('Erro:', error);
+                
+                setTimeout(() => {
+                    resultDiv.style.display = 'none';
+                }, 100000);
+            }
+        });
+    </script>
+
+</body>
+</html>
