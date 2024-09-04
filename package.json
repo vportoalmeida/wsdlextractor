@@ -8,7 +8,8 @@
     "dev": "nodemon src/app.ts",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p .",
-    "start": "npm run build && node dist/app.js"
+    "start": "npm run build && node dist/app.js",
+    "start:bat": "npm install && npm run start"
   },
   "keywords": [],
   "author": "",
