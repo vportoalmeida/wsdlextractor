@@ -10,7 +10,7 @@ class App {
     this.configureApp();
   }
 
-  configureApp() {
+  private configureApp() {
     this.app.use(express.json());
     this.app.use(express.static(path.join(__dirname, '/public')));
     this.app.post('/execute-rfc', (req, res) => {
@@ -39,7 +39,7 @@ class App {
     });
   }
 
-  runApp() {
+  public runApp() {
 
     this.app.listen(process.env.PORT || 3000, () => {
         console.log('Servidor rodando na porta 3000');
