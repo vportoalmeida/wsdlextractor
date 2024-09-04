@@ -5,6 +5,7 @@ export class XmlManipulationProvider {
   private responseParsed: string;
   private requestSourceParsed: string;
   private responseSourceParsed: string;
+  
   constructor(
     private readonly request: string, 
     private readonly response: string,

@@ -1,5 +1,7 @@
 export class ProcessXsdProvider {
-  constructor(private readonly wsdlJsonStr: string) {}
+  constructor(
+    private readonly wsdlJsonStr: string
+  ) {}
 
   private isTable(element: any): boolean {
     return (
