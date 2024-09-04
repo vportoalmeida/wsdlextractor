@@ -20,6 +20,10 @@ npm run build
 npm run start
 ```
 
+```sh
+npm run start:bat
+```
+
 WSDL Extractor é um projeto para extração de um arquivo WSDL a partir de um endpoint SAP para gerar 4 arquivos a serem utilizados no mapping de um Integration Flow no SAP BTP
 
 ## 🚀 Como Utilizar
