@@ -18,7 +18,7 @@ class App {
           
         if (rfcName && username && password) {
             const btpXsdFileGeneratorService = new BtpXsdFileGeneratorService(rfcName, username, password);
-            const {  } = btpXsdFileGeneratorService.generateFiles().then(({ 
+             btpXsdFileGeneratorService.generateFiles().then(({ 
               fileRequestXml, 
               fileResponseXml,
               fileRequestSourceXml,
