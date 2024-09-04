@@ -29,6 +29,7 @@ WSDL Extractor é um projeto para extração de um arquivo WSDL a partir de um e
 - Instalar as dependências: `npm install`
 - Executar em modo de desenvolvimento `npm run dev`
 - Executar em modo de produção `npm run build` e em seguida `npm run start`
+- Abrir o WebApp acessando http://localhost:PORTA
 
 > 💡 Lembrar de preencher as variáveis de ambiente
 
