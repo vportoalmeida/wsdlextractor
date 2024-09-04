@@ -105,7 +105,7 @@ export class ProcessXsdProvider {
 
         elements.forEach((element: any) => {        
           const parsedElement = this.parseElement(element, schema);        
-          const finalElement = parsedElement; // Correção: não adicionar tags extras
+          const finalElement = parsedElement;
 
           if (element.name.endsWith(".Response")) {
             responseJson["xsd:element"] = finalElement;
